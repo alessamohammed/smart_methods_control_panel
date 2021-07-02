@@ -1,18 +1,17 @@
 
-from flask import Flask, render_template, request, Response, flash, redirect, url_for
-from flask_moment import Moment
+from flask import Flask, render_template, request,abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import pymysql
+
+import sys
 # App Config.
 
 app = Flask(__name__)
-moment = Moment(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/smart_methods'
+app.config.from_object('config')
 db = SQLAlchemy(app)
-print(db)
+
 # connect to a local mysql database
-#migrate = Migrate(app, db)
+migrate = Migrate(app, db)
 
 class Engines(db.Model):
     __tablename__ = 'Engines'
@@ -25,19 +24,39 @@ class Engines(db.Model):
     Engine5 = db.Column(db.Integer, nullable=False)
     Engine6 = db.Column(db.Integer, nullable=False)
 
-#db.create_all()
-@app.route('/engines/create')
-def engines_submit():
-    Engine1 = request.get_json()['enginevalue1']
-    Engine2 = request.get_json()['enginevalue2']
-    Engine3 = request.get_json()['enginevalue3']
-    Engine4 = request.get_json()['enginevalue4']
-    Engine5 = request.get_json()['enginevalue5']
-    Engine6 = request.get_json()['enginevalue6']
+    
 
-    Engine = Engines(Engine1=Engine1,Engine2=Engine2,Engine3=Engine3,Engine4=Engine4,Engine5=Engine5,Engine6=Engine6)
-    db.session.add(Engine)
-    db.session.commit()
+@app.route('/engines/create', methods=['POST'])
+def engines_submit():
+    error = False
+    body = {}
+    default_value='0'
+    try:
+        Engine1 = request.form.get('enginevalue1',default_value)
+        Engine2 = request.form.get('enginevalue2',default_value)
+        Engine3 = request.form.get('enginevalue3',default_value)
+        Engine4 = request.form.get('enginevalue4',default_value)
+        Engine5 = request.form.get('enginevalue5',default_value)
+        Engine6 = request.form.get('enginevalue6',default_value)
+        Engine = Engines(Engine1=Engine1,Engine2=Engine2,Engine3=Engine3,Engine4=Engine4,Engine5=Engine5,Engine6=Engine6)
+        db.session.add(Engine)
+        db.session.commit()   
+        
+    except():
+        db.session.rollback()
+        error = True
+        print(sys.exc_info)
+    finally:
+        db.session.close()
+    if error:
+        abort(500)
+    else:
+        return render_template('index.html')+'<p>values were inserted successfully</p>'
+
+
+@app.route('/engines/values/table')
+def engine_values(): 
+    return render_template('enginevalues.html',Engines=Engines.query.all())
 
 
 @app.route('/')

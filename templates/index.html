@@ -3,7 +3,6 @@
     <head>
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         
        
 
@@ -12,52 +11,69 @@
     </head>
  
     <body>
+      
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <img height="32" src="{{url_for('static', filename='logo.png')}}" />
+  
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="/engines/values/table" class="nav-link">Engine Values Table</a></li>
+
+      </ul>
+    </header>
+  </div>
+
         <div class="container">
         <div class="row">
             <div class="col-2"></div>
   <div class="col-8">
-    <form action="/engines/create" id="engine_form">
+    <form action="/engines/create" id="engine_form" method="POST">
   <div class="range-wrap">
     <label>Engine 1</label>
     <input type="range" class="range" min="0" max="180">
     <output class="bubble"></output>
-    <input name="1" class="engine" id="enginevalue1" type="text">
+    <input name="enginevalue1" class="engine" id="enginevalue1" type="text">
   </div>
 
   <div class="range-wrap">
     <label>Engine 2</label>
     <input type="range" class="range" min="0" max="180">
     <output class="bubble"></output>
-    <input  name="2" class="engine" id="enginevalue2" type="text">
+    <input  name="enginevalue2" class="engine" id="enginevalue2" type="text">
   </div>
   
   <div class="range-wrap">
     <label>Engine 3</label>
     <input type="range" class="range" min="0" max="180">
     <output class="bubble"></output>
-    <input  name="3" class="engine" id="enginevalue3" type="text">
+    <input  name="enginevalue3" class="engine" id="enginevalue3" type="text">
   </div>
 
   <div class="range-wrap">
     <label>Engine 4</label>
     <input type="range" class="range" min="0" max="180">
     <output class="bubble"></output>
-    <input  name="4" class="engine" id="enginevalue4" type="text">
+    <input  name="enginevalue4" class="engine" id="enginevalue4" type="text">
   </div>
 
   <div class="range-wrap">
     <label>Engine 5</label>
     <input type="range" class="range" min="0" max="180">
     <output class="bubble"></output>
-    <input  name="5" class="engine"id="enginevalue5" type="text">
+    <input  name="enginevalue5" class="engine"id="enginevalue5" type="text">
   </div>
 
   <div class="range-wrap">
     <label>Engine 6</label>
     <input type="range" class="range" min="0" max="180">
     <output class="bubble"></output>
-    <input  name="6" class="engine" id="enginevalue6" type="text">
+    <input  name="enginevalue6" class="engine" id="enginevalue6" type="text">
   </div>
+  <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 </div>
 <div class="col-2"></div>
