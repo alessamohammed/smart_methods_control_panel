@@ -8,9 +8,9 @@ to run the files you will need to have ready mysql table with the name smart_met
 2- install flask
 3- install flask_sqlalchemy, flask_migrate
 4- set flask_app=app in terminal
-5- python -m db init
-6- python -m db migrate 
-7- python -m db upgrade
+5- python -m flask db init
+6- python -m flask db migrate 
+7- python -m flask db upgrade
 8- python -m flask run
 
 *these instruction for windows
