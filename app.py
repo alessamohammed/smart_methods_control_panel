@@ -24,12 +24,16 @@ class Engines(db.Model):
     Engine5 = db.Column(db.Integer, nullable=False)
     Engine6 = db.Column(db.Integer, nullable=False)
 
-    
+class Remote(db.Model):
+    __tablename__ = 'Remote'
+
+    id = db.Column(db.Integer, primary_key=True)
+    Direction = db.Column(db.String(10))
+
 
 @app.route('/engines/create', methods=['POST'])
 def engines_submit():
     error = False
-    body = {}
     default_value='0'
     try:
         Engine1 = request.form.get('enginevalue1',default_value)
@@ -58,6 +62,104 @@ def engines_submit():
 def engine_values(): 
     return render_template('enginevalues.html',Engines=Engines.query.all())
 
+@app.route('/remote')
+def remote():
+    return render_template('Remote.html', remotes=Remote.query)
+
+@app.route('/forward', methods=['POST'])
+def forward():
+    error = False
+    try:
+        Direction = 'Forward'
+        remote = Remote(Direction=Direction)
+        db.session.add(remote)
+        db.session.commit()   
+        
+    except():
+        db.session.rollback()
+        error = True
+        print(sys.exc_info)
+    finally:
+        db.session.close()
+    if error:
+        abort(500)
+    return render_template('Remote.html', remotes=Remote.query)
+
+@app.route('/backward', methods=['POST'])
+def backward():
+    error = False
+    try:
+        Direction = 'Backward'
+        remote = Remote(Direction=Direction)
+        db.session.add(remote)
+        db.session.commit()   
+        
+    except():
+        db.session.rollback()
+        error = True
+        print(sys.exc_info)
+    finally:
+        db.session.close()
+    if error:
+        abort(500)
+    return render_template('Remote.html', remotes=Remote.query)
+
+@app.route('/left', methods=['POST'])
+def left():
+    error = False
+    try:
+        Direction = 'Left'
+        remote = Remote(Direction=Direction)
+        db.session.add(remote)
+        db.session.commit()   
+        
+    except():
+        db.session.rollback()
+        error = True
+        print(sys.exc_info)
+    finally:
+        db.session.close()
+    if error:
+        abort(500)
+    return render_template('Remote.html', remotes=Remote.query)
+
+@app.route('/right', methods=['POST'])
+def right():
+    error = False
+    try:
+        Direction = 'Right'
+        remote = Remote(Direction=Direction)
+        db.session.add(remote)
+        db.session.commit()   
+        
+    except():
+        db.session.rollback()
+        error = True
+        print(sys.exc_info)
+    finally:
+        db.session.close()
+    if error:
+        abort(500)
+    return render_template('Remote.html', remotes=Remote.query)
+
+@app.route('/stop', methods=['POST'])
+def stop():
+    error = False
+    try:
+        Direction = 'Stop'
+        remote = Remote(Direction=Direction)
+        db.session.add(remote)
+        db.session.commit()   
+        
+    except():
+        db.session.rollback()
+        error = True
+        print(sys.exc_info)
+    finally:
+        db.session.close()
+    if error:
+        abort(500)
+    return render_template('Remote.html', remotes=Remote.query)
 
 @app.route('/')
 def index(): 
